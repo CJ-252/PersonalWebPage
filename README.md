@@ -1,5 +1,6 @@
 # WebAPPDevelopment
-Attempting to develop a web app. Personal/ learning. 
+Attempting to develop a web application as a resume/self introduction for leanring expierence. 
 
 
-login page build-  https://www.geeksforgeeks.org/python/create-a-modern-login-ui-using-customtkinter-module-in-python/
+Resources: 
+Login page build-  https://www.geeksforgeeks.org/python/create-a-modern-login-ui-using-customtkinter-module-in-python/
