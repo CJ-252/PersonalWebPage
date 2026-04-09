@@ -23,10 +23,13 @@ h2, h3 {
 /* Header */
 header {
     text-align: center;
-    padding: 2rem 1rem;
-    background-color: #021e08;
+    padding: 3rem 0;
+    background-image: url('images/Header.jpg');
+    background-size: cover;
+    background-position: center top;
     color: #ffffff;
 }
+
 
 /* Tabs */
 .tabs {
