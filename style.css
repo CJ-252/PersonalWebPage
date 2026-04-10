@@ -88,3 +88,17 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+/* About Me layout */
+.about-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 3rem;
+}
+
+.about-photo {
+    width: 200px;
+    height: auto;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
