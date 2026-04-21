@@ -6,6 +6,22 @@ body {
     margin: 0;
     color: #333;
     line-height: 1.6;
+    position: relative;
+    min-height: 100vh;
+}
+
+.spider-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+header,
+.tabs,
+.tab-content {
+    position: relative;
+    z-index: 1;
 }
 
 /* Headings */
