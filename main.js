@@ -35,92 +35,139 @@ window.addEventListener("resize", () => {
 // -------- Spider --------
 const spider = new THREE.Group();
 scene.add(spider);
+const baseSpiderScale = 1.5;
 
-const spiderColor = 0x3a3a3a;
+const bodyColor = 0x6f7379;
+const headPlateColor = 0xa6abb1;
+const legColor = 0x6d7177;
 
-// Body segments tuned for a softer, rounded look.
-const abdomen = new THREE.Mesh(
-  new THREE.CircleGeometry(8.6, 28),
-  new THREE.MeshBasicMaterial({ color: spiderColor })
+// Rear body and front head plate inspired by the reference silhouette.
+const body = new THREE.Mesh(
+  new THREE.CircleGeometry(9.2, 36),
+  new THREE.MeshBasicMaterial({ color: bodyColor })
 );
-abdomen.position.set(-6, 0, 0);
-abdomen.scale.set(1.28, 1.18, 1);
-spider.add(abdomen);
-
-const thorax = new THREE.Mesh(
-  new THREE.CircleGeometry(5.9, 24),
-  new THREE.MeshBasicMaterial({ color: spiderColor })
-);
-thorax.position.set(3, 0, 0.01);
-thorax.scale.set(1.08, 1.02, 1);
-spider.add(thorax);
+body.position.set(-0.7, 1.25, 0);
+body.scale.set(1.2, 1.02, 1);
+spider.add(body);
 
 const head = new THREE.Mesh(
-  new THREE.CircleGeometry(3.8, 20),
-  new THREE.MeshBasicMaterial({ color: spiderColor })
+  new THREE.CircleGeometry(5.7, 28),
+  new THREE.MeshBasicMaterial({ color: headPlateColor })
 );
-head.position.set(10.5, 0, 0.02);
-head.scale.set(1.04, 1.0, 1);
+head.position.set(8.7, -3.2, 0.05);
+head.position.z = 0.2;
+head.scale.set(1.26, 1.26, 1);
 spider.add(head);
 
-const eyeLWhite = new THREE.Mesh(
-  new THREE.CircleGeometry(1.1, 16),
+const pincherMaterial = new THREE.MeshBasicMaterial({ color: bodyColor });
+
+const leftPincher = new THREE.Mesh(
+  new THREE.CapsuleGeometry(0.60, 1.85, 3, 10),
+  pincherMaterial
+);
+leftPincher.position.set(4.35, 2.20, 0.22);
+leftPincher.rotation.z = -1.5;
+head.add(leftPincher);
+
+const rightPincher = new THREE.Mesh(
+  new THREE.CapsuleGeometry(0.60, 1.85, 3, 10),
+  pincherMaterial
+);
+rightPincher.position.set(4.35, -2.20, 0.22);
+rightPincher.rotation.z = -1.5;
+head.add(rightPincher);
+
+const eyeGroup = new THREE.Group();
+eyeGroup.position.set(9.0, -100.35, 0.25);
+eyeGroup.rotation.z = Math.PI / 2;
+eyeGroup.scale.set(1.56, 1.56, 1);
+spider.add(eyeGroup);
+
+const leftMainEye = new THREE.Mesh(
+  new THREE.CircleGeometry(1.22, 18),
+  new THREE.MeshBasicMaterial({ color: 0x000000 })
+);
+leftMainEye.position.set(-1.15, 0.18, 0);
+eyeGroup.add(leftMainEye);
+
+const rightMainEye = leftMainEye.clone();
+rightMainEye.position.set(1.15, 0.18, 0);
+eyeGroup.add(rightMainEye);
+
+const leftSideEye = new THREE.Mesh(
+  new THREE.CircleGeometry(0.58, 16),
+  new THREE.MeshBasicMaterial({ color: 0x000000 })
+);
+leftSideEye.scale.set(1.2, 1.2, 1);
+leftSideEye.position.set(-2.5, 1.56, 0);
+eyeGroup.add(leftSideEye);
+
+const rightSideEye = leftSideEye.clone();
+rightSideEye.position.set(2.5, 1.56, 0);
+eyeGroup.add(rightSideEye);
+
+const leftMainShine = new THREE.Mesh(
+  new THREE.CircleGeometry(0.34, 14),
   new THREE.MeshBasicMaterial({ color: 0xffffff })
 );
-eyeLWhite.position.set(11.8, 1.2, 0.04);
-spider.add(eyeLWhite);
+leftMainShine.position.set(-1.45, 0.45, 0);
+eyeGroup.add(leftMainShine);
 
-const eyeRWhite = eyeLWhite.clone();
-eyeRWhite.position.y = -1.2;
-spider.add(eyeRWhite);
+const rightMainShine = leftMainShine.clone();
+rightMainShine.position.set(1.45, 0.45, 0);
+eyeGroup.add(rightMainShine);
 
-const eyeLPupil = new THREE.Mesh(
-  new THREE.CircleGeometry(0.42, 14),
-  new THREE.MeshBasicMaterial({ color: 0x1c1c1c })
+const leftSideShine = new THREE.Mesh(
+  new THREE.CircleGeometry(0.16, 12),
+  new THREE.MeshBasicMaterial({ color: 0xffffff })
 );
-eyeLPupil.position.set(12.1, 1.2, 0.05);
-spider.add(eyeLPupil);
+leftSideShine.position.set(-2.25, 1.7, 0);
+eyeGroup.add(leftSideShine);
 
-const eyeRPupil = eyeLPupil.clone();
-eyeRPupil.position.y = -1.2;
-spider.add(eyeRPupil);
+const rightSideShine = leftSideShine.clone();
+rightSideShine.position.set(2.25, 1.7, 0);
+eyeGroup.add(rightSideShine);
 
-const cheekL = new THREE.Mesh(
-  new THREE.CircleGeometry(0.62, 14),
-  new THREE.MeshBasicMaterial({ color: 0xd9a5a5 })
-);
-cheekL.position.set(10.8, 2.35, 0.035);
-spider.add(cheekL);
-
-const cheekR = cheekL.clone();
-cheekR.position.y = -2.35;
-spider.add(cheekR);
-
-const baseAbdomenX = -6;
-const baseThoraxX = 3;
-const baseHeadX = 10.5;
+const baseBodyX = -0.7;
+const baseBodyY = 1.25;
+const baseHeadX = 8.7;
+const baseHeadY = -3.2;
 
 // Legs
 const legs = [];
 const legCount = 8;
-const shoulderRadius = 7.4;
-const upperLegLength = 11.5;
-const lowerLegLength = 14;
-const shoulderAngles = [0.95, 0.55, 0.15, -0.25, 3.4, 3.0, 2.6, 2.2];
+const upperLegLength = 8;
+const lowerLegLength = 9.5;
+const upperLegRadius = 0.62;
+const lowerLegRadius = 0.56;
+const legGlobalRotationOffset = 1.03;
+const legRootOffsets = [
+  [-6.0, 4.0],
+  [2.2, 6.2],
+  [-1.1, 7.2],
+  [-4.2, 6.2],
+  [-6.0, -4.0],
+  [2.2, -6.2],
+  [-1.1, -7.2],
+  [-4.2, -6.2],
+];
 
 for (let i = 0; i < legCount; i++) {
   const root = new THREE.Group();
-  const angle = shoulderAngles[i];
+  const offset = legRootOffsets[i];
+  const anchorX = offset[0];
+  const anchorY = offset[1];
+  const outwardAngle = Math.atan2(anchorY, anchorX - baseBodyX);
   root.position.set(
-    Math.cos(angle) * shoulderRadius,
-    Math.sin(angle) * shoulderRadius,
-    -0.01
+    anchorX,
+    anchorY,
+    -0.4
   );
   spider.add(root);
 
   const upper = new THREE.Mesh(
-    new THREE.PlaneGeometry(1.8, upperLegLength),
-    new THREE.MeshBasicMaterial({ color: spiderColor })
+    new THREE.CapsuleGeometry(upperLegRadius, upperLegLength, 3, 10),
+    new THREE.MeshBasicMaterial({ color: legColor })
   );
   upper.position.y = -upperLegLength / 2;
   root.add(upper);
@@ -130,16 +177,16 @@ for (let i = 0; i < legCount; i++) {
   root.add(joint);
 
   const lower = new THREE.Mesh(
-    new THREE.PlaneGeometry(1.5, lowerLegLength),
-    new THREE.MeshBasicMaterial({ color: spiderColor })
+    new THREE.CapsuleGeometry(lowerLegRadius, lowerLegLength, 3, 10),
+    new THREE.MeshBasicMaterial({ color: legColor })
   );
   lower.position.y = -lowerLegLength / 2;
   joint.add(lower);
 
-  const isRightSide = i < legCount / 2;
-  const restRoot = angle + (isRightSide ? -0.35 : 0.35);
-  const restJoint = isRightSide ? 0.68 : -0.68;
-  root.rotation.z = restRoot;
+  const isUpperSide = anchorY > 0;
+  const restRoot = outwardAngle + (isUpperSide ? -0.25 : 0.25) + legGlobalRotationOffset;
+  const restJoint = isUpperSide ? 0.62 : -0.62;
+  root.rotation.z = restRoot * 0.8;
   joint.rotation.z = restJoint;
 
   legs.push({
@@ -251,6 +298,7 @@ window.addEventListener("keydown", (e) => {
 
 // Start in center
 spider.position.copy(target);
+spider.scale.setScalar(baseSpiderScale);
 const lastPosition = spider.position.clone();
 
 // -------- Animate --------
@@ -297,15 +345,22 @@ function animate() {
     leg.joint.rotation.z = leg.restJoint + bend + crouchBend;
   }
 
-  spider.scale.set(1 + crouchAmount * 0.04, 1 - crouchAmount * 0.12, 1);
-  abdomen.position.set(baseAbdomenX - crouchAmount * 0.25, -crouchAmount * 0.42, 0);
-  thorax.position.set(baseThoraxX, Math.sin(t * 8) * 0.14 - crouchAmount * 0.6, 0.01);
-  head.position.set(baseHeadX + crouchAmount * 0.08, -crouchAmount * 0.58, 0.02);
-  abdomen.scale.y = 1.18 + Math.sin(t * 4.6) * 0.012 - crouchAmount * 0.03;
+  spider.scale.set(
+    baseSpiderScale * (1 + crouchAmount * 0.04),
+    baseSpiderScale * (1 - crouchAmount * 0.12),
+    baseSpiderScale
+  );
+  const bodyBobY = Math.sin(t * 8) * 0.11;
+  body.position.set(baseBodyX - crouchAmount * 0.12, baseBodyY + bodyBobY - crouchAmount * 0.46, 0);
+  head.position.set(baseHeadX + crouchAmount * 0.08, baseHeadY - crouchAmount * 0.52, 0.2);
+  eyeGroup.position.set(8.7 + crouchAmount * 0.08, -2.35 - crouchAmount * 0.5, 0.25);
+  body.scale.y = 1.02 + Math.sin(t * 4.6) * 0.012 - crouchAmount * 0.03;
 
   const eyeLook = Math.sin(t * 3.2) * 0.12;
-  eyeLPupil.position.x = 12.1 + eyeLook;
-  eyeRPupil.position.x = 12.1 + eyeLook;
+  leftMainShine.position.x = -1.45 + eyeLook * 0.45;
+  rightMainShine.position.x = 1.45 + eyeLook * 0.45;
+  leftSideShine.position.x = -2.25 + eyeLook * 0.28;
+  rightSideShine.position.x = 2.25 + eyeLook * 0.28;
 
   //builds web on shift +w
   for (let i = activeWebs.length - 1; i >= 0; i--) {
