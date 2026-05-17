@@ -235,6 +235,8 @@ window.addEventListener("pointerdown", triggerCrouch);
 // Keyboard reaction: spin a mini purple web on Shift+W.
 const activeWebs = [];
 const webColor = 0x5a2a8a;
+const rearWebLocalAnchor = new THREE.Vector3(baseBodyX - 11.2, baseBodyY, 0);
+const rearWebWorldAnchor = new THREE.Vector3();
 
 function createMiniWeb() {
   const ringCount = 4;
@@ -274,7 +276,8 @@ function createMiniWeb() {
   });
 
   const web = new THREE.LineSegments(geometry, material);
-  web.position.copy(spider.position);
+  spider.localToWorld(rearWebWorldAnchor.copy(rearWebLocalAnchor));
+  web.position.copy(rearWebWorldAnchor);
   web.position.z = -0.04;
   web.scale.setScalar(0.4);
   scene.add(web);
