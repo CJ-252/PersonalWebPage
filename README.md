@@ -24,6 +24,12 @@ https://www.ramijames.com/learn-threejs/interaction/raycasting-and-mouse-events
 4. Open the extracted folder, then double-click the file named index.html.
 5. Your web browser will open the page. If it does not open automatically, right-click index.html and choose "Open with," then select your browser.
 
+
+# Hot Keys
+- Shift + W to shoot webs
+- idle for twenty second to be brought a flower!! 
+
+
 # Troubleshooting
 1. The page opens as plain text/code instead of a webpage:
 	Make sure you opened the file named index.html in a web browser (Chrome, Edge, Firefox), not in a text editor.
